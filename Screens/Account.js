@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import user_service from '../Services/user_service';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const API_URL = 'http://localhost:8080/api/auth/';
 
@@ -23,9 +25,39 @@ const initialState = {
   isLoading: false,
   user: {},
   current_user: {},
+  content: {},
+  iscurrentuser: false,
 };
+const clearAllData = async () => {
+  try {
+    await AsyncStorage.removeItem('un');
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('email');
+    this.setState({notAuthorized: true});
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 class AccountScreen extends React.Component {
   state = initialState;
+  user = async () => {
+    try {
+      await JSON.parse(AsyncStorage.getItem('token'));
+      this.setState({iscurrentuser: true});
+    } catch (error) {
+      console.log(error);
+    }
+    if (this.state.iscurrentuser) {
+      initialState.notAuthorized = false;
+    } else {
+      try {
+        clearAllData;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   componentWillUnmount() {}
 
@@ -38,6 +70,7 @@ class AccountScreen extends React.Component {
   };
 
   onPress = () => {
+    clearAllData;
     this.setState({notAuthorized: true, username: '', password: ''});
     // this.props.navigation.navigate('Offers');
   };
@@ -49,11 +82,11 @@ class AccountScreen extends React.Component {
   handlelogin() {
     const {username, password} = this.state;
 
-    const payload = {username, password};
-    console.log(payload);
+    // const payload = {username, password};
+    // console.log(payload);
 
     const onSuccess = async ({data}) => {
-      console.log(data);
+      // console.log(data);
       try {
         await AsyncStorage.setItem('token', data.accessToken);
         await AsyncStorage.setItem('un', data.username);
@@ -64,7 +97,8 @@ class AccountScreen extends React.Component {
         this.setState({
           current_user: {token: token, un: un, email: email},
         });
-        console.log(this.state.current_user);
+        // console.log(this.state.current_user);
+        this.setState({content: JSON.parse(user_service.getUserBoard())});
       } catch (error) {
         console.log(error);
       }
@@ -86,28 +120,23 @@ class AccountScreen extends React.Component {
             message: 'Please Try Again.',
           });
     };
-    // console.log('errorrrrrssss' + this.state.error);
 
     // Show spinner when call is made
     this.setState({isLoading: true});
-    // console.log(username + password + this.state.errors);
     axios
       .post(API_URL + 'signin', {
         username,
         password,
       })
       .then(onSuccess)
-      // .then(response => {
-      // console.log(res);
-      // console.log(response);
-      // })
       .catch(onFailure);
   }
   render() {
     const notLoggedIn = (
       <View style={styles.container} keyboardShouldPersistTaps="handled">
         <Spinner visible={isLoading} />
-        <Image style={styles.image} source={require('../images/icon.png')} />
+        <Icon name="ios-book-outline" style={styles.icon} />
+        {/* <Image style={styles.image} source={require('../images/icon.png')} /> */}
 
         <View style={styles.errorMessageContainerStyle}>
           <Text style={styles.errorMessageTextStyle}>{this.state.error}</Text>
@@ -120,6 +149,7 @@ class AccountScreen extends React.Component {
             placeholder="Username."
             value={this.state.username}
             maxLength={256}
+            color="#cd077d"
             onChangeText={this.onUsernameChange}
             onSubmitEditing={this.handlelogin.bind(this)}
             autoCapitalize="none"
@@ -139,6 +169,7 @@ class AccountScreen extends React.Component {
             onSubmitEditing={this.handlelogin.bind(this)}
             autoCapitalize="none"
             autoCorrect={false}
+            color="#cd077d"
             // returnKeyType="next"
           />
         </View>

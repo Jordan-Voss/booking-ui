@@ -1,33 +1,49 @@
 import * as React from 'react';
-import {Text, View} from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import styles from '../Styles/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import user_service from '../Services/user_service';
 // import {Icon} from 'react-native-vector-icons/Ionicons';
 
-class OfferScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {un: null};
-    this.loadCredentials();
-  }
+const initialState = {
+  content: {},
+  currentusername: '',
+  iscurrentuser: false,
+};
 
-  async loadCredentials() {
-    try {
-      const un = await AsyncStorage.getItem('un');
-      this.setState({un: un});
-    } catch (error) {
-      // Manage error handling
-    }
-  }
+class OfferScreen extends React.Component {
+  state = initialState;
 
   render() {
-    const {un} = this.state;
-    return (
-      <View style={styles.tabContainer}>
+    user_service.getUserBoard();
+    const loggedIn = (
+      <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
         <Text>Offers Screen</Text>
-        <Text>{this.state.un}</Text>
-        {/* <Icon name="rocket" size={30} color="#900" /> */}
+        <Text>{this.state.content.id}</Text>
       </View>
+    );
+
+    const notLoggedIn = (
+      <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
+        <Text>Offers Screen</Text>
+        <Text>Not Logged In</Text>
+      </View>
+    );
+
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          console.log('keyboard dismiss');
+        }}>
+        {this.state.iscurrentuser ? loggedIn : notLoggedIn}
+      </TouchableWithoutFeedback>
     );
   }
 }

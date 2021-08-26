@@ -6,9 +6,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  icon: {
+    // flex: 1,
+    fontSize: 250,
+    alignItems: 'center',
+    alignContent: 'center',
+    color: '#cd077d',
+    paddingLeft: '5%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FEF2F2',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -23,7 +31,7 @@ const styles = StyleSheet.create({
   // },
 
   inputView: {
-    backgroundColor: '#FDD1EB',
+    backgroundColor: '#FEF2F2',
     borderRadius: 30,
     width: '70%',
     height: 45,
@@ -33,7 +41,7 @@ const styles = StyleSheet.create({
   },
   errorMessageContainerStyle: {
     marginBottom: 8,
-    backgroundColor: '#FEF2F2',
+    backgroundColor: '#fff',
     padding: 8,
     borderRadius: 4,
   },
@@ -71,10 +79,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
-    backgroundColor: '#B6666F',
+    backgroundColor: '#cd077d',
   },
   loginText: {
-    color: 'black',
+    color: '#FEF2F2',
   },
 });
 

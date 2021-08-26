@@ -58,6 +58,7 @@ const TabNavigator = createBottomTabNavigator(
               backgroundColor: '#ffffff',
               justifyContent: 'center',
               alignItems: 'center',
+              // paddingBottom: '5%',
               shadowColor: 'black',
               shadowOpacity: 0.8,
               shadowRadius: 2,
@@ -76,6 +77,7 @@ const TabNavigator = createBottomTabNavigator(
         ),
         tabBarOptions: {
           activeTintColor: '#cd077d',
+          paddingBottom: '50%',
         },
       },
     },
