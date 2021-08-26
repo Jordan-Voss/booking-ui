@@ -9,6 +9,7 @@ import {
 import styles from '../Styles/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import user_service from '../Services/user_service';
+import {removeFromAsyncStorage} from './Account';
 // import {Icon} from 'react-native-vector-icons/Ionicons';
 
 const initialState = {
@@ -16,17 +17,53 @@ const initialState = {
   currentusername: '',
   iscurrentuser: false,
 };
+// export const isSignedIn = () => {
+//   return new Promise((resolve, reject) => {
+//     AsyncStorage.getItem('token')
+//       .then(res => {
+//         if (res !== null) {
+//           resolve(true);
+//         } else {
+//           resolve(false);
+//         }
+//       })
+//       .catch(err => reject(err));
+//   });
+// };
 
 class OfferScreen extends React.Component {
   state = initialState;
-  componentDidMount() {
-    console.log('GET DATA CALLED');
-    user_service
-      .getUserBoard()
-      .then(response =>
-        this.setState({content: response, iscurrentuser: true}),
-      );
-  }
+//   // componentDidMount() {
+//   //   const currentUser = AuthService.getCurrentUser();
+
+//   //   if (!currentUser) this.setState({ redirect: "/home" });
+//   //   this.setState({ currentUser: currentUser, userReady: true })
+//   // };
+//   async componentDidMount() {
+//     console.log('GET DATA CALLED');
+//     try {
+//       const curr = await user_service
+//         .getUserBoard()
+//         .then(response =>
+//           this.setState({content: response, iscurrentuser: true}),
+//         );
+//       if (!curr) {
+//         await user_service
+//           .getUserBoard()
+//           .then(response =>
+//             this.setState({content: response, iscurrentuser: true}),
+//           );
+//         console.log('rmv');
+//         removeFromAsyncStorage('token');
+//         this.setState({iscurrentuser: false});
+//       } else {
+//         console.log('got usr');
+//         this.setState({iscurrentuser: true});
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
   render() {
     const loggedIn = (
       <View style={{flex: 1, flexDirection: 'column', padding: 50}}>

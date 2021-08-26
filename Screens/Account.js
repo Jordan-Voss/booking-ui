@@ -12,8 +12,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import user_service from '../Services/user_service';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const API_URL = 'http://localhost:8080/api/auth/';
+import login from '../Services/auth_service';
+import logout from '../Services/user_service';
 
 const initialState = {
   username: '',
@@ -28,10 +28,22 @@ const initialState = {
   content: {},
   iscurrentuser: false,
 };
+export const removeFromAsyncStorage = async key => {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.removeItem(key, (err, response) => {
+      if (response) {
+        resolve(response);
+      } else {
+        reject(err);
+      }
+    });
+  });
+};
 const clearAllData = async () => {
   try {
-    await AsyncStorage.removeItem('un');
-    await AsyncStorage.removeItem('token');
+    console.log('removing all');
+    await removeFromAsyncStorage('un');
+    await removeFromAsyncStorage('token');
     await AsyncStorage.removeItem('email');
     this.setState({notAuthorized: true});
   } catch (error) {
@@ -69,9 +81,11 @@ class AccountScreen extends React.Component {
     this.setState({password});
   };
 
-  onPress = () => {
-    clearAllData;
-    this.setState({notAuthorized: true, username: '', password: ''});
+  onPress = async () => {
+    logout;
+    console.log('logged out');
+    console.log('SHOULD BE LOGGED OUT ' + (await AsyncStorage.getItem('user')));
+    this.setState(initialState);
     // this.props.navigation.navigate('Offers');
   };
 
@@ -79,58 +93,74 @@ class AccountScreen extends React.Component {
     this.setState({username: ''});
   };
 
-  handlelogin() {
+  async handlelogin() {
+    console.log('hello');
+    console.log(this.state);
     const {username, password} = this.state;
-
-    // const payload = {username, password};
-    // console.log(payload);
-
-    const onSuccess = async ({data}) => {
-      // console.log(data);
-      try {
-        await AsyncStorage.setItem('token', data.accessToken);
-        await AsyncStorage.setItem('un', data.username);
-        await AsyncStorage.setItem('email', data.email);
-        const token = await AsyncStorage.getItem('token');
-        const un = await AsyncStorage.getItem('un');
-        const email = await AsyncStorage.getItem('email');
-        this.setState({
-          current_user: {token: token, un: un, email: email},
-        });
-        // console.log(this.state.current_user);
-        this.setState({content: JSON.parse(user_service.getUserBoard())});
-      } catch (error) {
-        console.log(error);
-      }
-
-      // this.props.navigation.replace('AfterLogin');
-      this.setState({notAuthorized: false});
-    };
-
-    const onFailure = error => {
-      this.setState({
-        error: error.response.data.error,
-        isLoading: false,
-      });
-      this.state.error === 'Unauthorized'
-        ? this.setState({
-            message: 'Invalid Login Credentials, Please Try Again.',
-          })
-        : this.setState({
-            message: 'Please Try Again.',
-          });
-    };
-
-    // Show spinner when call is made
-    this.setState({isLoading: true});
-    axios
-      .post(API_URL + 'signin', {
-        username,
-        password,
-      })
-      .then(onSuccess)
-      .catch(onFailure);
+    console.log('going to log in');
+    const resp = await login(username, password);
+    this.setState({
+      notAuthorized: false,
+      current_user: {
+        token: resp.accessToken,
+        un: resp.username,
+        email: resp.email,
+      },
+    });
+    console.log('HELLO' + (await AsyncStorage.getItem('user')));
   }
+  // const payload = {username, password};
+  // console.log(payload);
+  //   const onGood = async (username, password) => {
+  //     login(username, password);
+  //   };
+
+  //   const onSuccess = async ({data}) => {
+  //     // console.log(data);
+  //     try {
+  //       await AsyncStorage.setItem('token', data.accessToken);
+  //       await AsyncStorage.setItem('un', data.username);
+  //       await AsyncStorage.setItem('email', data.email);
+  //       const token = await AsyncStorage.getItem('token');
+  //       const un = await AsyncStorage.getItem('un');
+  //       const email = await AsyncStorage.getItem('email');
+  //       this.setState({
+  //         current_user: {token: token, un: un, email: email},
+  //       });
+  //       // console.log(this.state.current_user);
+  //       // this.setState({content: JSON.parse/(user_service.getUserBoard())});
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+
+  //     // this.props.navigation.replace('AfterLogin');
+  //     this.setState({notAuthorized: false});
+  //   };
+
+  //   const onFailure = error => {
+  //     this.setState({
+  //       error: error.response.data.error,
+  //       isLoading: false,
+  //     });
+  //     this.state.error === 'Unauthorized'
+  //       ? this.setState({
+  //           message: 'Invalid Login Credentials, Please Try Again.',
+  //         })
+  //       : this.setState({
+  //           message: 'Please Try Again.',
+  //         });
+  //   };
+
+  //   // Show spinner when call is made
+  //   this.setState({isLoading: true});
+  //   axios
+  //     .post(API_URL + 'signin', {
+  //       username,
+  //       password,
+  //     })
+  //     .then(onSuccess)
+  //     .catch(onFailure);
+  // }
   render() {
     const notLoggedIn = (
       <View style={styles.container} keyboardShouldPersistTaps="handled">
@@ -196,14 +226,15 @@ class AccountScreen extends React.Component {
     const loggedIn = (
       <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
         <Button
-          onPress={this.onPress}
+          onPress={this.onPress.bind(this)}
           title="logged in"
           color="black"
           style={styles.t}>
           Logged In
         </Button>
-        <Text>{this.state.current_user.un}</Text>
-        <Text>{this.state.current_user.email}</Text>
+        <Text>Username : {this.state.current_user.un}</Text>
+        <Text>Email : {this.state.current_user.email}</Text>
+        <Text>Token : {this.state.current_user.token}</Text>
       </View>
     );
 
