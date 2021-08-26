@@ -16,7 +16,7 @@ const getUserBoard = async () => {
   console.log('AUTH HEADER' + a.Authorization);
   return axios
     .get(API_URL + 'user', {headers: await authHeader()})
-    .then(response => console.log(response.data));
+    .then(response => response.data);
 };
 
 export default {
