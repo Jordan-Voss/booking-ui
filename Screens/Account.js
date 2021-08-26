@@ -29,14 +29,16 @@ const initialState = {
   iscurrentuser: false,
 };
 export const removeFromAsyncStorage = async key => {
-  return new Promise((resolve, reject) => {
-    AsyncStorage.removeItem(key, (err, response) => {
-      if (response) {
-        resolve(response);
-      } else {
-        reject(err);
-      }
-    });
+  return new Promise(async (resolve, reject) => {
+    await AsyncStorage.clear()
+      .then(res => {
+        if (res !== null) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch(err => reject(err));
   });
 };
 const clearAllData = async () => {
@@ -82,9 +84,9 @@ class AccountScreen extends React.Component {
   };
 
   onPress = async () => {
-    logout;
-    console.log('logged out');
-    console.log('SHOULD BE LOGGED OUT ' + (await AsyncStorage.getItem('user')));
+    logout();
+    // console.log('logged out');
+    // console.log('SHOULD BE LOGGED OUT ' + (await AsyncStorage.getItem('user')));
     this.setState(initialState);
     // this.props.navigation.navigate('Offers');
   };

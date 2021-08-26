@@ -21,7 +21,10 @@ const getUserBoard = async () => {
 };
 
 const logout = async () => {
-  await AsyncStorage.removeItem('user');
+  await AsyncStorage.clear();
+  await AsyncStorage.getItem('user').then(resp =>
+    console.log('LOGGED OUT??>>??' + resp),
+  );
 };
 export default {
   getPublicContent,
