@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import login from '../Services/auth_service';
 import {logout} from '../Services/user_service';
 
+import {withNavigationFocus} from 'react-navigation';
+
 const initialState = {
   username: '',
   password: '',
@@ -55,6 +57,10 @@ const clearAllData = async () => {
 
 class AccountScreen extends React.Component {
   state = initialState;
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFocused !== this.props.isFocused) {
+    }
+  }
   user = async () => {
     try {
       await JSON.parse(AsyncStorage.getItem('token'));
@@ -72,8 +78,6 @@ class AccountScreen extends React.Component {
       }
     }
   };
-
-  componentWillUnmount() {}
 
   onUsernameChange = username => {
     this.setState({username});
@@ -249,4 +253,4 @@ class AccountScreen extends React.Component {
     );
   }
 }
-export default AccountScreen;
+export default withNavigationFocus(AccountScreen);

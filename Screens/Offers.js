@@ -10,9 +10,9 @@ import styles from '../Styles/style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import user_service from '../Services/user_service';
 import {removeFromAsyncStorage} from './Account';
-import isCurrentUser from '../Services/user_service';
+import {isCurrentUser} from '../Services/user_service';
 import {useIsFocused} from '@react-navigation/native';
-
+import {getUserBoard} from '../Services/user_service';
 import {withNavigationFocus} from 'react-navigation';
 
 // import {Icon} from 'react-native-vector-icons/Ionicons';
@@ -38,12 +38,11 @@ export const isSignedIn = () => {
 
 class OfferScreen extends React.Component {
   state = initialState;
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.isFocused !== this.props.isFocused) {
-      this.setState({iscurrentuser: isSignedIn()});
-      //Call any action to update you view
-      //fetch data when the component is focused
-      //To prevent extra component re-renders, you may need to write some logic in shouldComponentUpdate
+      console.log(this.state.iscurrentuser);
+      this.setState({iscurrentuser: await isSignedIn()});
+      await getUserBoard().then(response => this.setState({content: response}));
     }
   }
 
@@ -81,6 +80,7 @@ class OfferScreen extends React.Component {
     const loggedIn = (
       <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
         <Text>Offers Screen</Text>
+        <Text>{this.state.content}</Text>
       </View>
     );
 
@@ -88,6 +88,7 @@ class OfferScreen extends React.Component {
       <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
         <Text>Offers Screen</Text>
         <Text>Not Logged In</Text>
+        <Text>{this.state.content}</Text>
       </View>
     );
 
