@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import user_service from '../Services/user_service';
 import Icon from 'react-native-vector-icons/Ionicons';
 import login from '../Services/auth_service';
-import logout from '../Services/user_service';
+import {logout} from '../Services/user_service';
 
 const initialState = {
   username: '',
@@ -96,10 +96,7 @@ class AccountScreen extends React.Component {
   };
 
   async handlelogin() {
-    console.log('hello');
-    console.log(this.state);
     const {username, password} = this.state;
-    console.log('going to log in');
     const resp = await login(username, password);
     this.setState({
       notAuthorized: false,
