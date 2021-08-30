@@ -2,7 +2,6 @@ import React from 'react';
 import {View} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import Icon from 'react-native-ionicons';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import DiscoverScreen from './Screens/Discover';
 import ScanScreen from './Screens/Scan';
@@ -29,18 +28,6 @@ const TabNavigator = createBottomTabNavigator(
         },
       },
     },
-    // Discover: {
-    //   screen: DiscoverScreen,
-    //   navigationOptions: {
-    //     tabBarLabel: 'Discover',
-    //     tabBarIcon: ({focused, tintColor}) => (
-    //       <Icon name="search-outline" color={tintColor} size={25} />
-    //     ),
-    //     tabBarOptions: {
-    //       activeTintColor: '#cd077d',
-    //     },
-    //   },
-    // },
     Scan: {
       screen: ScanScreen,
       navigationOptions: {
@@ -58,13 +45,11 @@ const TabNavigator = createBottomTabNavigator(
               backgroundColor: '#ffffff',
               justifyContent: 'center',
               alignItems: 'center',
-              // paddingBottom: '5%',
               shadowColor: 'black',
               shadowOpacity: 0.8,
               shadowRadius: 2,
               shadowOffset: {
                 height: 1,
-                // width: 1
               },
             }}>
             <Icon
@@ -81,18 +66,6 @@ const TabNavigator = createBottomTabNavigator(
         },
       },
     },
-    // Wallet: {
-    //   screen: WalletScreen,
-    //   navigationOptions: {
-    //     tabBarLabel: 'Wallet',
-    //     tabBarIcon: ({focused, tintColor}) => (
-    //       <Icon name="wallet-outline" color={tintColor} size={25} />
-    //     ),
-    //     tabBarOptions: {
-    //       activeTintColor: '#cd077d',
-    //     },
-    //   },
-    // },
     Account: {
       screen: AccountScreen,
       navigationOptions: {

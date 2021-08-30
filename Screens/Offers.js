@@ -15,8 +15,6 @@ import {useIsFocused} from '@react-navigation/native';
 import {getUserBoard} from '../Services/user_service';
 import {withNavigationFocus} from 'react-navigation';
 
-// import {Icon} from 'react-native-vector-icons/Ionicons';
-
 const initialState = {
   content: null,
   currentusername: '',
