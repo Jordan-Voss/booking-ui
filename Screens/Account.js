@@ -94,7 +94,10 @@ class AccountScreen extends React.Component {
 
   render() {
     const notLoggedIn = (
-      <ScrollView>
+      <ScrollView
+        style={{
+          backgroundColor: '#fff',
+        }}>
         <View style={styles.container} keyboardShouldPersistTaps="handled">
           <Spinner visible={isLoading} />
           <Icon name="ios-book-outline" style={styles.icon} />
@@ -111,6 +114,7 @@ class AccountScreen extends React.Component {
             <TextInput
               style={styles.TextInput}
               placeholder="Username."
+              placeholderTextColor="black"
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
@@ -127,6 +131,7 @@ class AccountScreen extends React.Component {
             <TextInput
               style={styles.TextInput}
               placeholder="Password."
+              placeholderTextColor="black"
               secureTextEntry={true}
               value={this.state.password}
               onChangeText={this.onPasswordChange}
@@ -192,7 +197,10 @@ class AccountScreen extends React.Component {
     );
 
     const register = (
-      <ScrollView>
+      <ScrollView
+        style={{
+          backgroundColor: '#fff',
+        }}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss();
@@ -223,6 +231,7 @@ class AccountScreen extends React.Component {
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Name."
+                  placeholderTextColor="black"
                   value={this.state.username}
                   maxLength={256}
                   color="#cd077d"
@@ -237,6 +246,7 @@ class AccountScreen extends React.Component {
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Username."
+                  placeholderTextColor="black"
                   value={this.state.username}
                   maxLength={256}
                   color="#cd077d"
@@ -251,6 +261,7 @@ class AccountScreen extends React.Component {
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Email."
+                  placeholderTextColor="black"
                   value={this.state.username}
                   maxLength={256}
                   color="#cd077d"
@@ -267,6 +278,7 @@ class AccountScreen extends React.Component {
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Password."
+                  placeholderTextColor="black"
                   secureTextEntry={true}
                   value={this.state.password}
                   onChangeText={this.onPasswordChange}
@@ -281,6 +293,7 @@ class AccountScreen extends React.Component {
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Re-Enter Password."
+                  placeholderTextColor="black"
                   secureTextEntry={true}
                   value={this.state.password}
                   onChangeText={this.onPasswordChange}
