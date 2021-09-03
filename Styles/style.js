@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     // flex: 1,
+    marginTop: '20%',
     fontSize: 250,
     alignItems: 'center',
     alignContent: 'center',
