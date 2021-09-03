@@ -5,6 +5,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  reg_icon: {
+    fontSize: 250,
+    alignItems: 'center',
+    alignContent: 'center',
+    color: '#cd077d',
+    paddingLeft: '5%',
+    paddingBottom: '1%',
   },
   icon: {
     // flex: 1,
@@ -71,7 +80,15 @@ const styles = StyleSheet.create({
     height: 30,
     // marginBottom: 10,
   },
-
+  reg_loginBtn: {
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    backgroundColor: '#cd077d',
+  },
   loginBtn: {
     width: '80%',
     borderRadius: 25,

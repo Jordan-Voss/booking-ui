@@ -1,7 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getCurrentRole} from './user_service';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = 'https://sc-tutor-api.herokuapp.com/api/auth/';
 
 const login = async (username, password) => {
   return axios
@@ -15,24 +16,12 @@ const login = async (username, password) => {
       }
       console.log(response.data);
       return response.data;
+    })
+    .catch(function (error) {
+      console.log(
+        'There has been a problem with your fetch operation: ' + error.message,
+      );
     });
 };
-
-//   logout() {
-//     localStorage.removeItem("user");
-//   }
-
-//   register(username, email, password) {
-//     return axios.post(API_URL + "signup", {
-//       username,
-//       email,
-//       password
-//     });
-//   }
-
-//   getCurrentUser() {
-//     return JSON.parse(localStorage.getItem('user'));;
-//   }
-// }
 
 export default login;

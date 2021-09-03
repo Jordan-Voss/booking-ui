@@ -14,6 +14,7 @@ import {isCurrentUser} from '../Services/user_service';
 import {useIsFocused} from '@react-navigation/native';
 import {getUserBoard} from '../Services/user_service';
 import {withNavigationFocus} from 'react-navigation';
+import {getCurrentRole} from '../Services/user_service';
 
 const initialState = {
   content: null,
@@ -40,6 +41,7 @@ class OfferScreen extends React.Component {
     if (prevProps.isFocused !== this.props.isFocused) {
       console.log(this.state.iscurrentuser);
       this.setState({iscurrentuser: await isSignedIn()});
+      console.log('ROLE' + (await getCurrentRole()));
       await getUserBoard().then(response => this.setState({content: response}));
     }
   }
@@ -76,14 +78,26 @@ class OfferScreen extends React.Component {
   //   }
   render() {
     const loggedIn = (
-      <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          padding: 50,
+          backgroundColor: '#fff',
+        }}>
         <Text>Offers Screen</Text>
         <Text>{this.state.content}</Text>
       </View>
     );
 
     const notLoggedIn = (
-      <View style={{flex: 1, flexDirection: 'column', padding: 50}}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          padding: 50,
+          backgroundColor: '#fff',
+        }}>
         <Text>Offers Screen</Text>
         <Text>Not Logged In</Text>
         <Text>{this.state.content}</Text>
