@@ -11,13 +11,17 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import login from '../Services/auth_service';
-import {logout} from '../Services/user_service';
+import {logout, register} from '../Services/user_service';
 
 import {withNavigationFocus} from 'react-navigation';
 
 const initialState = {
   username: '',
   password: '',
+  regusername: '',
+  regemail: '',
+  regpassword: '',
+  regpassword2: '',
   errors: {},
   error: '',
   message: '',
@@ -29,6 +33,7 @@ const initialState = {
   iscurrentuser: false,
   loggingIn: true,
 };
+
 export const removeFromAsyncStorage = async key => {
   return new Promise(async (resolve, reject) => {
     await AsyncStorage.clear()
@@ -55,6 +60,22 @@ class AccountScreen extends React.Component {
     this.setState({username});
   };
 
+  onRegUsernameChange = regusername => {
+    this.setState({regusername});
+  };
+
+  onRegEmailChange = regemail => {
+    this.setState({regemail});
+  };
+
+  onRegPasswordChange = regpassword => {
+    this.setState({regpassword});
+  };
+
+  onRegPassword2Change = regpassword2 => {
+    this.setState({regpassword2});
+  };
+
   onPasswordChange = password => {
     this.setState({password});
   };
@@ -77,6 +98,11 @@ class AccountScreen extends React.Component {
   logginging = () => {
     this.setState({loggingIn: true});
   };
+  handleregister = () => {
+    const {regemail, regusername, regpassword, regpassword2} = this.state;
+    console.log(regemail, regusername, regpassword, regpassword2);
+    register(regusername, regemail, regpassword);
+  };
 
   async handlelogin() {
     const {username, password} = this.state;
@@ -94,10 +120,7 @@ class AccountScreen extends React.Component {
 
   render() {
     const notLoggedIn = (
-      <ScrollView
-        style={{
-          backgroundColor: '#fff',
-        }}>
+      <ScrollView style={{backgroundColor: '#fff'}}>
         <View style={styles.container} keyboardShouldPersistTaps="handled">
           <Spinner visible={isLoading} />
           <Icon name="ios-book-outline" style={styles.icon} />
@@ -113,8 +136,8 @@ class AccountScreen extends React.Component {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="Username."
-              placeholderTextColor="black"
+              placeholder="Email"
+              placeholderTextColor="grey"
               value={this.state.username}
               maxLength={256}
               color="#cd077d"
@@ -130,8 +153,8 @@ class AccountScreen extends React.Component {
           <View style={styles.inputView}>
             <TextInput
               style={styles.TextInput}
-              placeholder="Password."
-              placeholderTextColor="black"
+              placeholder="Password"
+              placeholderTextColor="grey"
               secureTextEntry={true}
               value={this.state.password}
               onChangeText={this.onPasswordChange}
@@ -230,23 +253,23 @@ class AccountScreen extends React.Component {
               <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
-                  placeholder="Name."
-                  placeholderTextColor="black"
-                  value={this.state.username}
+                  placeholder="Name"
+                  placeholderTextColor="grey"
+                  value={this.state.regusername}
                   maxLength={256}
                   color="#cd077d"
-                  onChangeText={this.onUsernameChange}
-                  onSubmitEditing={this.handlelogin.bind(this)}
+                  onChangeText={this.onRegUsernameChange}
+                  onSubmitEditing={this.handleregister.bind(this)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   // returnKeyType="next"
                 />
               </View>
-              <View style={styles.inputView}>
+              {/* <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Username."
-                  placeholderTextColor="black"
+                  placeholderTextColor="grey"
                   value={this.state.username}
                   maxLength={256}
                   color="#cd077d"
@@ -255,18 +278,18 @@ class AccountScreen extends React.Component {
                   autoCapitalize="none"
                   autoCorrect={false}
                   // returnKeyType="next"
-                />
-              </View>
+                /> */}
+              {/* </View> */}
               <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
-                  placeholder="Email."
-                  placeholderTextColor="black"
-                  value={this.state.username}
+                  placeholder="Email"
+                  placeholderTextColor="grey"
+                  value={this.state.regemail}
                   maxLength={256}
                   color="#cd077d"
-                  onChangeText={this.onUsernameChange}
-                  onSubmitEditing={this.handlelogin.bind(this)}
+                  onChangeText={this.onRegEmailChange}
+                  onSubmitEditing={this.handleregister.bind(this)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   // returnKeyType="next"
@@ -277,12 +300,12 @@ class AccountScreen extends React.Component {
               <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
-                  placeholder="Password."
-                  placeholderTextColor="black"
+                  placeholder="Password"
+                  placeholderTextColor="grey"
                   secureTextEntry={true}
-                  value={this.state.password}
-                  onChangeText={this.onPasswordChange}
-                  onSubmitEditing={this.handlelogin.bind(this)}
+                  value={this.state.regpassword}
+                  onChangeText={this.onRegPasswordChange}
+                  onSubmitEditing={this.handleregister.bind(this)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   color="#cd077d"
@@ -292,12 +315,12 @@ class AccountScreen extends React.Component {
               <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
-                  placeholder="Re-Enter Password."
-                  placeholderTextColor="black"
+                  placeholder="Re-Enter Password"
+                  placeholderTextColor="grey"
                   secureTextEntry={true}
-                  value={this.state.password}
-                  onChangeText={this.onPasswordChange}
-                  onSubmitEditing={this.handlelogin.bind(this)}
+                  value={this.state.regpassword2}
+                  onChangeText={this.onRegPassword2Change}
+                  onSubmitEditing={this.handleregister.bind(this)}
                   autoCapitalize="none"
                   autoCorrect={false}
                   color="#cd077d"
@@ -315,8 +338,8 @@ class AccountScreen extends React.Component {
               <TouchableOpacity
                 style={styles.reg_loginBtn}
                 // onPress={this.onPress}
-                onPress={this.logginging}>
-                <Text style={styles.loginText}>LOGIN</Text>
+                onPress={this.handleregister}>
+                <Text style={styles.loginText}>REGISTER</Text>
               </TouchableOpacity>
             </View>
           </View>

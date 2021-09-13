@@ -2,7 +2,7 @@ import axios from 'axios';
 import authHeader from './auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'https://sc-tutor-api.herokuapp.com/api/test/';
+const API_URL = 'http://localhost:8080/api/test/';
 
 const getPublicContent = () => {
   return axios
@@ -58,6 +58,24 @@ export const logout = async () => {
       );
       // ADD THIS THROW error
       throw error;
+    });
+};
+
+export const register = async (username, email, password) => {
+  console.log('REG' + username + email + password);
+  return axios
+    .post(API_URL + 'signup', {
+      username,
+      email,
+      password,
+    })
+    .then(async response => {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(
+        'There has been a problem with your fetch operation: ' + error.message,
+      );
     });
 };
 

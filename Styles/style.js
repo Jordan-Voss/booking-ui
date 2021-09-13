@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   },
   reg_icon: {
     fontSize: 250,
+    marginTop: '5%',
     alignItems: 'center',
     alignContent: 'center',
     color: '#cd077d',
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   inputView: {
     backgroundColor: '#FEF2F2',
     borderRadius: 30,
-    width: '70%',
+    width: '99%',
     height: 45,
     marginBottom: 20,
 
@@ -74,11 +75,13 @@ const styles = StyleSheet.create({
   forgot_button: {
     height: 30,
     textAlign: 'center',
+    color: '#db2828',
     //   marginBottom: 5,
   },
   account_button: {
     textAlign: 'center',
     height: 30,
+    color: '#db2828',
     // marginBottom: 10,
   },
   reg_loginBtn: {
