@@ -98,10 +98,22 @@ class AccountScreen extends React.Component {
   logginging = () => {
     this.setState({loggingIn: true});
   };
-  handleregister = () => {
+  handleregister = async () => {
     const {regemail, regusername, regpassword, regpassword2} = this.state;
     console.log(regemail, regusername, regpassword, regpassword2);
-    register(regusername, regemail, regpassword);
+    const respon = await register(regusername, regemail, regpassword);
+    const msg = respon.data.message;
+    if (msg === 'User registered successfully!') {
+      this.setState({
+        loggingIn: true,
+        regemail: '',
+        regusername: '',
+        regpassword: '',
+        regpassword2: '',
+      });
+    } else {
+      this.setState({loggingIn: false});
+    }
   };
 
   async handlelogin() {

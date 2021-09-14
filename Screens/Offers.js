@@ -41,7 +41,11 @@ class OfferScreen extends React.Component {
     if (prevProps.isFocused !== this.props.isFocused) {
       console.log(this.state.iscurrentuser);
       this.setState({iscurrentuser: await isSignedIn()});
-      console.log('ROLE' + (await getCurrentRole()));
+      if (!this.state.iscurrentuser) {
+        this.setState({content: null});
+      }
+      const rle = await getCurrentRole();
+      console.log('ROLE' + rle);
       await getUserBoard().then(response => this.setState({content: response}));
     }
   }

@@ -2,11 +2,12 @@ import axios from 'axios';
 import authHeader from './auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://localhost:8080/api/auth/';
+const API_TEST_URL = 'http://localhost:8080/api/test/';
 
 const getPublicContent = () => {
   return axios
-    .get(API_URL + 'all')
+    .get(API_TEST_URL + 'all')
     .then(response => console.log(response.data))
     .catch(function (error) {
       console.log(
@@ -23,7 +24,7 @@ export const getUserBoard = async () => {
   //   const a = await authHeader();
   //   console.log('AUTH HEADER' + a.Authorization);
   return axios
-    .get(API_URL + 'user', {headers: await authHeader()})
+    .get(API_TEST_URL + 'user', {headers: await authHeader()})
     .then(response => response.data)
     .catch(function (error) {
       console.log('You do not have User access: ' + error.message);
@@ -38,7 +39,7 @@ export const getModeratorBoard = async () => {
   //   const a = await authHeader();
   //   console.log('AUTH HEADER' + a.Authorization);
   return axios
-    .get(API_URL + 'mod', {headers: await authHeader()})
+    .get(API_TEST_URL + 'mod', {headers: await authHeader()})
     .then(response => response.data)
     .catch(function (error) {
       console.log('You do not have moderator access: ' + error.message);
@@ -61,7 +62,7 @@ export const logout = async () => {
     });
 };
 
-export const register = async (username, email, password) => {
+export const register = (username, email, password) => {
   console.log('REG' + username + email + password);
   return axios
     .post(API_URL + 'signup', {
@@ -69,8 +70,8 @@ export const register = async (username, email, password) => {
       email,
       password,
     })
-    .then(async response => {
-      console.log(response);
+    .then(response => {
+      return response;
     })
     .catch(function (error) {
       console.log(
@@ -91,7 +92,11 @@ export const isCurrentUser = async () => {
 
 export const getCurrentRole = async () => {
   const usr = await AsyncStorage.getItem('user');
-  return JSON.parse(usr).roles;
+  if (usr === null) {
+    return 'Not Signed In';
+  } else {
+    return JSON.parse(usr).roles;
+  }
 };
 
 export default {
