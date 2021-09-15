@@ -5,14 +5,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import DiscoverScreen from './Screens/Discover';
 import ScanScreen from './Screens/Scan';
-import OfferScreen from './Screens/Offers';
-import WalletScreen from './Screens/Wallet';
+import OfferScreen from './Screens/Booking';
+import BookingScreen from './Screens/Booking';
 import AccountScreen from './Screens/Account';
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Offers: {
-      screen: OfferScreen,
+    Scan: {
+      screen: ScanScreen,
       navigationOptions: {
         tabBarLabel: 'About Me',
         tabBarIcon: ({focused, tintColor}) => (
@@ -28,8 +28,8 @@ const TabNavigator = createBottomTabNavigator(
         },
       },
     },
-    Scan: {
-      screen: ScanScreen,
+    Booking: {
+      screen: BookingScreen,
       navigationOptions: {
         tabBarLabel: 'Book Lesson',
         tabBarIcon: ({focused, tintColor}) => (
@@ -80,7 +80,7 @@ const TabNavigator = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Offers',
+    initialRouteName: 'Scan',
   },
 );
 

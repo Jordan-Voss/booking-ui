@@ -35,7 +35,7 @@ export const isSignedIn = () => {
   });
 };
 
-class OfferScreen extends React.Component {
+class BookingScreen extends React.Component {
   state = initialState;
   async componentDidUpdate(prevProps) {
     if (prevProps.isFocused !== this.props.isFocused) {
@@ -119,4 +119,4 @@ class OfferScreen extends React.Component {
     );
   }
 }
-export default withNavigationFocus(OfferScreen);
+export default withNavigationFocus(BookingScreen);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getCurrentRole} from './user_service';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = 'http://188.141.36.19:8080/api/auth/';
 
 const login = async (username, password) => {
   return axios

@@ -112,7 +112,13 @@ class AccountScreen extends React.Component {
         regpassword2: '',
       });
     } else {
-      this.setState({loggingIn: false});
+      this.setState({
+        loggingIn: false,
+        regemail: '',
+        regusername: '',
+        regpassword: '',
+        regpassword2: '',
+      });
     }
   };
 
