@@ -1,9 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import {ScrollView, Text, Image, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  Image,
+  View,
+  TouchableWithoutFeedback,
+  Button,
+} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import App from '../App';
 import styles from '../Styles/style';
 
 class ScanScreen extends React.Component {
+  register = async () => {
+    this.props.navigation.navigate('Account');
+
+    return false;
+  };
   render() {
     return (
       <ScrollView>
@@ -37,6 +51,12 @@ class ScanScreen extends React.Component {
             alignItems: 'center',
           }}>
           <Text>Hello and Welcome to Sinead Curran Tutor!</Text>
+          {/* onpress={() => this.onRadioPressed.bind(this)}  */}
+          <TouchableOpacity onPress={this.register}>
+            <Text>
+              Go to the Account page to create an account and book a lesson
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
