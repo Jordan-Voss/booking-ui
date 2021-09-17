@@ -86,10 +86,7 @@ class AccountScreen extends React.Component {
   };
 
   register = async () => {
-    // console.log('logged out');
-    // console.log('SHOULD BE LOGGED OUT ' + (await AsyncStorage.getItem('user')));
     this.setState({loggingIn: false});
-    // this.props.navigation.navigate('Offers');
   };
 
   onPressTxt = () => {
@@ -142,8 +139,6 @@ class AccountScreen extends React.Component {
         <View style={styles.container} keyboardShouldPersistTaps="handled">
           <Spinner visible={isLoading} />
           <Icon name="ios-book-outline" style={styles.icon} />
-          {/* <Image style={styles.image} source={require('../images/icon.png')} /> */}
-
           <View style={styles.errorMessageContainerStyle}>
             <Text style={styles.errorMessageTextStyle}>{this.state.error}</Text>
             <Text style={styles.errorMessageTextStyle}>
@@ -163,10 +158,8 @@ class AccountScreen extends React.Component {
               onSubmitEditing={this.handlelogin.bind(this)}
               autoCapitalize="none"
               autoCorrect={false}
-              // returnKeyType="next"
             />
           </View>
-          {/* {this.getErrorMessageByField('username')} */}
 
           <View style={styles.inputView}>
             <TextInput
@@ -180,11 +173,8 @@ class AccountScreen extends React.Component {
               autoCapitalize="none"
               autoCorrect={false}
               color="#cd077d"
-              // returnKeyType="next"
             />
           </View>
-
-          {/* {this.getErrorMessageByField('password')} */}
 
           <TouchableOpacity>
             <Text style={styles.forgot_button}>Forgot Password?</Text>
@@ -197,7 +187,6 @@ class AccountScreen extends React.Component {
 
           <TouchableOpacity
             style={styles.loginBtn}
-            // onPress={this.onPress}
             onPress={this.handlelogin.bind(this)}>
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
@@ -283,21 +272,6 @@ class AccountScreen extends React.Component {
                   // returnKeyType="next"
                 />
               </View>
-              {/* <View style={styles.inputView}>
-                <TextInput
-                  style={styles.TextInput}
-                  placeholder="Username."
-                  placeholderTextColor="grey"
-                  value={this.state.username}
-                  maxLength={256}
-                  color="#cd077d"
-                  onChangeText={this.onUsernameChange}
-                  onSubmitEditing={this.handlelogin.bind(this)}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  // returnKeyType="next"
-                /> */}
-              {/* </View> */}
               <View style={styles.inputView}>
                 <TextInput
                   style={styles.TextInput}
@@ -310,10 +284,8 @@ class AccountScreen extends React.Component {
                   onSubmitEditing={this.handleregister.bind(this)}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  // returnKeyType="next"
                 />
               </View>
-              {/* {this.getErrorMessageByField('username')} */}
 
               <View style={styles.inputView}>
                 <TextInput
