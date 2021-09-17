@@ -20,7 +20,7 @@ class ScanScreen extends React.Component {
   };
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor: '#fff'}}>
         <View style={{flex: 1}}>
           <View style={{height: 250, backgroundColor: '#E4C2C1'}} />
           <View

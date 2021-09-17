@@ -81,8 +81,8 @@ export const register = (username, email, password) => {
 };
 
 export const isCurrentUser = async () => {
-  console.log('sdgsr');
   const isCurrent = await AsyncStorage.getItem('user');
+  // console.log(isCurrent + 'iscurrent');
   if (isCurrent !== null) {
     return Promise.resolve(isCurrent);
   } else {
@@ -92,10 +92,17 @@ export const isCurrentUser = async () => {
 
 export const getCurrentRole = async () => {
   const usr = await AsyncStorage.getItem('user');
+  console.log('getting role');
   if (usr === null) {
     return 'Not Signed In';
-  } else {
-    return JSON.parse(usr).roles;
+  } else if (JSON.parse(usr).roles[0] === 'ROLE_USER') {
+    return 'user';
+    // return JSON.parse(usr).roles;
+  } else if (JSON.parse(usr).roles[0] === 'ROLE_MOD') {
+    console.log('mod');
+    return 'mod';
+  } else if (JSON.parse(usr).roles[0] === 'ROLE_ADMIN') {
+    return 'admin';
   }
 };
 

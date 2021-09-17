@@ -3,6 +3,7 @@ import {
   Text,
   View,
   Button,
+  ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -20,6 +21,8 @@ const initialState = {
   content: null,
   currentusername: '',
   iscurrentuser: false,
+  role: '',
+  isUser: false,
 };
 export const isSignedIn = () => {
   return new Promise((resolve, reject) => {
@@ -35,18 +38,44 @@ export const isSignedIn = () => {
   });
 };
 
+export const isRole = () => {
+  return new Promise((resolve, reject) => {
+    getCurrentRole()
+      .then(res => {
+        if (res !== 'Not Signed In') {
+          if (res === 'user') {
+            resolve('user');
+          } else if (res === 'admin') {
+            resolve('admin');
+          } else {
+            resolve('mod');
+          }
+        } else {
+          resolve('no_user');
+        }
+      })
+      .catch(err => reject(err));
+  });
+};
+
 class BookingScreen extends React.Component {
   state = initialState;
   async componentDidUpdate(prevProps) {
     if (prevProps.isFocused !== this.props.isFocused) {
       console.log(this.state.iscurrentuser);
       this.setState({iscurrentuser: await isSignedIn()});
+      console.log('current user' + this.state.iscurrentuser);
       if (!this.state.iscurrentuser) {
-        this.setState({content: null});
+        this.setState({content: null, iscurrentuser: false});
+      } else {
+        await isRole().then(response =>
+          // console.log('resp' + response),
+          this.setState({role: response}),
+        );
+        await getUserBoard().then(response =>
+          this.setState({content: response}),
+        );
       }
-      const rle = await getCurrentRole();
-      console.log('ROLE' + rle);
-      await getUserBoard().then(response => this.setState({content: response}));
     }
   }
 
@@ -81,17 +110,89 @@ class BookingScreen extends React.Component {
   //     }
   //   }
   render() {
+    let user_role = null;
+    if (this.state.role === 'user') {
+      user_role = (
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss();
+              console.log('keyboard dismiss');
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                padding: 50,
+                backgroundColor: '#fff',
+              }}>
+              <Text>User Screen!!!</Text>
+              <Text>{this.state.content}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      );
+    } else if (this.state.role === 'admin') {
+      user_role = (
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss();
+              console.log('keyboard dismiss');
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                padding: 50,
+                backgroundColor: '#fff',
+              }}>
+              <Text>Admin Screen</Text>
+              <Text>{this.state.content}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      );
+    } else {
+      user_role = (
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss();
+              console.log('keyboard dismiss');
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                padding: 50,
+                backgroundColor: '#fff',
+              }}>
+              <Text>Mod Screen</Text>
+              <Text>{this.state.content}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      );
+    }
+
     const loggedIn = (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          padding: 50,
-          backgroundColor: '#fff',
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          console.log('keyboard dismiss');
         }}>
-        <Text>Offers Screen</Text>
-        <Text>{this.state.content}</Text>
-      </View>
+        {user_role}
+      </TouchableWithoutFeedback>
     );
 
     const notLoggedIn = (
