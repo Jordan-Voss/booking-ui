@@ -40,15 +40,31 @@ class ViewUpcomingAdmin extends React.Component {
     return (
       // <ScrollView>
       <View style={{height: 600}}>
-        {/* <View>{7 === 7 ? helloMessage : goodbyeMessage}</View>
         <Button onPress={this.getUpcoming} title="Get Upcoming" />
         {this.state.lessons.map(lesson => (
           <Text key={lesson.id}>
             {lesson.subject} on {lesson.startDate} at {lesson.startTime} for
             {lesson.duration}
           </Text>
-        ))} */}
-        <Agenda />
+        ))}
+        <Agenda
+          items={{
+            '2021-09-22': [{name: 'item 1 - any js object'}],
+            '2021-09-23': [{name: 'item 2 - any js object', height: 80}],
+            '2021-09-24': [],
+            '2021-09-25': [
+              {name: 'item 3 - any js object'},
+              {name: 'any js object'},
+            ],
+          }}
+          renderItem={item => {
+            return (
+              <View>
+                <Text>{item.name}</Text>
+              </View>
+            );
+          }}
+        />
       </View>
       // </ScrollView>
     );
