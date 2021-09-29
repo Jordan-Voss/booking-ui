@@ -1,4 +1,11 @@
 {
-  "name": "booking",
-  "displayName": "booking"
+  "expo": {
+    "name": "booking.ui",
+    "slug": "booking.ui",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "booking.ui"
 }
